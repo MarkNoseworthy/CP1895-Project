@@ -1,0 +1,25 @@
+{% extends "base.html" %^}
+
+{% block page_title %}
+Recipe Management
+{% endblock %}
+
+{% block H1_Description %}
+Add a dish
+{% endblock %}
+
+{% block H1_Content %}
+Please fill the form in the next section to add a dish.
+{% endblock %}
+
+{% block H2_Description %}
+Please fill the following form.
+{% endblock %}
+
+{% block H2_Content %}
+<form action="http://localhost:8080/add_recipe" method="post">
+    <label for="dish_name">Dish name:</label><br>
+    <input type="text" id="dish_name" name="dish_name"><br>
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}

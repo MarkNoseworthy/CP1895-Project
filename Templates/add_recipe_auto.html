@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% from "form-macros.html" import render_field %}
+
+{% block page_title %}
+Recipe Management
+{% endblock %}
+
+{% block H1_Description %}
+Add a Recipe
+{% endblock %}
+
+{% block H1_Content %}
+Please fill up the form in the below section to add a recipe
+{% endblock %}
+
+{% block H2_Description %}
+Please fill up the following form
+{% endblock %}
+
+{% block H2_Content %}
+
+<section>
+  <form action="" enctype="multipart/form-data" method="post">
+    {{ form.csrf_token }}
+    <div class="row">
+      <div class="col-md-5">
+        <h3>Recipe Information</h3>
+        <table>
+          {{ render_field(form.recipe_name, size=20) }}
+          {{ render_field(form.recipe_image) }}
+          {{ render_field(form.ingredients_list, size=200) }}
+          {{ render_field(form.prep_instructions, size=200) }}
+          {{ render_field(form.serving_instructions, size=20) }}
+        </table>
+      </div>
+      <table>
+        <tr class="submit">
+          <td></td>
+          <td>
+            <button type="submit">Submit</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </form>
+</section>
+
+{% endblock %}
