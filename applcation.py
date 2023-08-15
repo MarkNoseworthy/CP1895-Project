@@ -2,7 +2,6 @@ import os
 from flask import Flask, redirect, url_for, request, render_template
 import pandas as pd
 from werkzeug.utils import secure_filename
-
 from forms import RecipeInformation
 
 app = Flask(__name__)
@@ -45,7 +44,14 @@ def add_recipe_auto():
 
 @app.route('/remove_recipe', methods = ['POST', 'GET'])
 def remove_recipe():
-    return render_template('remove_recipe.html')
+    form = RecipeInformation()
+    if form.validate_on_submit():
+        recipe_name = form.recipe_name.data
+        df = pd.DataFrame([{'dish': recipe_name}])
+        df.to_csv(os.path.join(app.config['SUBMITTED_DATA'] + recipe_name.lower().replace(" ", "_") + '.csv'))
+        return redirect(url_for('base'))
+    else:
+        return render_template('remove_recipe.html', form=form)
 
 if __name__ == '__main__':
     app.run(debug=True)

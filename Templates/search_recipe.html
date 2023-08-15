@@ -1,10 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% from "form-macros.html" import render_field %}
 
+{% block page_title %}
+Recipe Collection - Search Recipes
+{% endblock %}
+
+<body>
+  <form action="" enctype="multipart/form-data" method="post">
+    {{ form.csrf_token }}
+    <div class="row">
+      <div class="col-md-5">
+        <h3>Recipe Information</h3>
+        <table>
+          {{ render_field(form.recipe_name, size=20) }}
+        </table>
+      </div>
+      <table>
+        <tr class="submit">
+          <td></td>
+          <td>
+            <button type="submit">Submit</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </form>
 </body>
-</html>
