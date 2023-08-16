@@ -13,23 +13,44 @@ app.config['SUBMITTED_IMG'] = os.path.join('static', 'image_dir', '')
 def base():
     return render_template('index.html')
 
-@app.route('/search_recipe', methods = ['POST', 'GET'])
+@app.route('/search_recipe', methods = ['GET'])
 def search_recipe():
     return render_template('search_recipe.html')
 
-@app.route('/add_recipe', methods = ['POST', 'GET'])
-def add_recipe():
-    if request.method == 'POST':
-        dish_name = request.form['dish_name']
-        print(dish_name)
-        return "Dish added successfully."
-    else:
-        return render_template('add_recipe_manual.html')
+@app.route('/search_recipe_results', methods=['GET'])
+def search_recipe_results():
+    search_term = request.args.get('search_term', '')
+    matched_recipes = []
+
+    if search_term:
+        data_dir = app.config['SUBMITTED_DATA']
+        csv_files = [filename for filename in os.listdir(data_dir) if filename.endswith('.csv')]
+
+        for csv_filename in csv_files:
+            csv_path = os.path.join(data_dir, csv_filename)
+            df = pd.read_csv(csv_path)
+
+            if 'dish' in df.columns and search_term.lower() in df['dish'].str.lower().values:
+                matched_recipes.append({'csv_filename': csv_filename, 'recipe_name': df.at[0, 'dish'],
+                                        'ingredients': df.at[0, 'ingredients'], 'prep': df.at[0, 'prep'],
+                                        'serving': df.at[0, 'serving'], 'pic': df.at[0, 'pic']})
+
+    return render_template('search_recipe_results.html', search_term=search_term, matched_recipes=matched_recipes)
+
+
+# @app.route('/add_recipe', methods = ['POST', 'GET'])
+# def add_recipe():
+#     if request.method == 'POST':
+#         dish_name = request.form['dish_name']
+#         print(dish_name)
+#         return "Dish added successfully."
+#     else:
+#         return render_template('add_recipe_manual.html')
 
 @app.route('/add_recipe_auto', methods = ['POST', 'GET'])
 def add_recipe_auto():
     form = RecipeInformation()
-    if form.validate_on_submit():
+    if form.validate():
         recipe_name = form.recipe_name.data
         pic_filename = recipe_name.lower().replace(" ", "_") + '.' + secure_filename(form.recipe_image.data.filename).split('.')[-1]
         form.recipe_image.data.save(os.path.join(app.config['SUBMITTED_IMG'] + pic_filename))
@@ -42,16 +63,8 @@ def add_recipe_auto():
     else:
         return render_template('add_recipe_auto.html', form=form)
 
-@app.route('/remove_recipe', methods = ['POST', 'GET'])
-def remove_recipe():
-    form = RecipeInformation()
-    if form.validate_on_submit():
-        recipe_name = form.recipe_name.data
-        df = pd.DataFrame([{'dish': recipe_name}])
-        df.to_csv(os.path.join(app.config['SUBMITTED_DATA'] + recipe_name.lower().replace(" ", "_") + '.csv'))
-        return redirect(url_for('base'))
-    else:
-        return render_template('remove_recipe.html', form=form)
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

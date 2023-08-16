@@ -1,32 +1,34 @@
 {% extends "base.html" %}
-{% from "form-macros.html" import render_field %}
 
 {% block page_title %}
 Recipe Collection - Remove Recipes
 {% endblock %}
 
-{% block H2_Content %}
+{% block page_content %}
+<section class="container mt-5">
+    <header class="text-center">
+        <h1 class="display-4">Remove Recipes</h1>
+        <p class="lead">Select a recipe to remove from the collection.</p>
+    </header>
+</section>
 
-<body>
-  <form action="" enctype="multipart/form-data" method="post">
-    {{ form.csrf_token }}
+<section class="container my-5">
     <div class="row">
-      <div class="col-md-5">
-        <h3>Recipe Information</h3>
-        <table>
-          {{ render_field(form.recipe_name, size=20) }}
-        </table>
-      </div>
-      <table>
-        <tr class="submit">
-          <td></td>
-          <td>
-            <button type="submit">Submit</button>
-          </td>
-        </tr>
-      </table>
+        <div class="col-lg-8 mx-auto">
+            <form action="{{ url_for('remove_recipe') }}" method="post">
+                {{ form.csrf_token }}
+                <label for="recipe">Select Recipe:</label>
+                <select name="recipe" class="form-select mb-3">
+                    <option value="" selected disabled>Select a recipe to remove</option>
+                    {% for csv_file in csv_files %}
+                        <option value="{{ csv_file }}">{{ csv_file }}</option>
+                    {% endfor %}
+                </select>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-danger">Remove Recipe</button>
+                </div>
+            </form>
+        </div>
     </div>
-  </form>
-</body>
-
+</section>
 {% endblock %}

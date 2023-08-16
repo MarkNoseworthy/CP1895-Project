@@ -1,61 +1,47 @@
-/* Header Styling */
-header {
-    color: #333; /* Dark Gray */
-    margin-top: 20px;
+/* Custom CSS for Cooking Recipes Collection Web App */
+body {
+    background-color: #F4F4F4; /* Light Gray */
 }
 
-/* Navigation Bar Styling */
 .navbar {
-    background-color: #3A3A3A; /* Dark Gray */
-    padding: 10px 0;
-    border-bottom: 1px solid #444; /* Slightly darker Gray */
+    background-color: #F07070; /* Coral Red */
+}
+
+.navbar-brand {
+    font-weight: bold;
 }
 
 .navbar-nav .nav-link {
     color: #fff; /* White */
-    border-radius: 5px;
-    padding: 5px 10px;
-    margin: 0 5px;
-    transition: background-color 0.3s;
+    margin-right: 15px;
 }
 
 .navbar-nav .nav-link:hover {
-    background-color: #444; /* Slightly darker Gray */
+    background-color: #D94848; /* Slightly darker Coral Red */
 }
 
-/* Button Styling */
-.btn-primary {
-    background-color: #3498DB; /* Blue */
-    border-color: #3498DB;
+.container {
+    max-width: 800px;
+}
+
+.header-title {
+    font-size: 36px;
+}
+
+.lead {
+    font-size: 18px;
+}
+
+.article-title {
+    font-size: 28px;
+}
+
+.article-content {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.footer {
+    background-color: #F07070; /* Coral Red */
     color: #fff; /* White */
-}
-
-.btn-danger {
-    background-color: #E74C3C; /* Red */
-    border-color: #E74C3C;
-    color: #fff; /* White */
-}
-
-/* Article Styling */
-article header {
-    margin-bottom: 20px;
-    font-size: 24px;
-    color: #333; /* Dark Gray */
-}
-
-article section {
-    margin-bottom: 30px;
-}
-
-article h2 {
-    font-size: 20px;
-    color: #3498DB; /* Blue */
-}
-
-/* Footer Styling */
-footer {
-    background-color: #2E2E2E; /* Dark Gray */
-    padding: 10px 0;
-    color: #777; /* Gray */
-    border-top: 1px solid #333; /* Slightly darker Gray */
 }

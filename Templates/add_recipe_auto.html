@@ -1,40 +1,43 @@
 {% extends "base.html" %}
 {% from "form-macros.html" import render_field %}
-
 {% block page_title %}
 Recipe Collection - Upload Recipes
 {% endblock %}
 
-{% block H2_Description %}
-Please fill up the following form
-{% endblock %}
-
-{% block H2_Content %}
-
-<section>
-  <form action="" enctype="multipart/form-data" method="post">
-    {{ form.csrf_token }}
-    <div class="row">
-      <div class="col-md-5">
-        <h3>Recipe Information</h3>
-        <table>
-          {{ render_field(form.recipe_name, size=20) }}
-          {{ render_field(form.recipe_image) }}
-          {{ render_field(form.ingredients_list, size=200) }}
-          {{ render_field(form.prep_instructions, size=200) }}
-          {{ render_field(form.serving_instructions, size=20) }}
-        </table>
-      </div>
-      <table>
-        <tr class="submit">
-          <td></td>
-          <td>
-            <button type="submit">Submit</button>
-          </td>
-        </tr>
-      </table>
-    </div>
-  </form>
+{% block page_content %}
+<section class="container mt-5">
+    <header class="text-center">
+        <h1 class="display-4">Upload Recipes</h1>
+        <p class="lead">Please fill out the form below to upload a new recipe.</p>
+    </header>
 </section>
 
+<section class="container my-5">
+    <form action="" enctype="multipart/form-data" method="post">
+        {{ form.csrf_token }}
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <h3>Recipe Information</h3>
+                <div class="mb-3">
+                    {{ render_field(form.recipe_name, class="form-control", placeholder="Recipe Name") }}
+                </div>
+                <div class="mb-3">
+                    {{ render_field(form.recipe_image, class="form-control", accept="image/*") }}
+                </div>
+                <div class="mb-3">
+                    {{ render_field(form.ingredients_list, class="form-control", placeholder="Ingredients List") }}
+                </div>
+                <div class="mb-3">
+                    {{ render_field(form.prep_instructions, class="form-control", placeholder="Preparation Instructions") }}
+                </div>
+                <div class="mb-3">
+                    {{ render_field(form.serving_instructions, class="form-control", placeholder="Serving Instructions") }}
+                </div>
+                <div class="mb-3 text-center">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
 {% endblock %}

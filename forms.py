@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileRequired, FileField
 from wtforms.fields import StringField, TextAreaField
-from wtforms.validators import DataRequired, Length
+from wtforms.validators import DataRequired
 
 class RecipeInformation(FlaskForm):
     recipe_name = StringField('Recipe Name:', validators=[DataRequired()])
