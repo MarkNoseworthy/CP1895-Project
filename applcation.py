@@ -23,11 +23,10 @@ def search_recipe_results():
     matched_recipes = []
 
     if search_term:
-        data_dir = app.config['SUBMITTED_DATA']
-        csv_files = [filename for filename in os.listdir(data_dir) if filename.endswith('.csv')]
+        csv_files = [filename for filename in os.listdir(app.config['SUBMITTED_DATA']) if filename.endswith('.csv')]
 
         for csv_filename in csv_files:
-            csv_path = os.path.join(data_dir, csv_filename)
+            csv_path = os.path.join(app.config['SUBMITTED_DATA'], csv_filename)
             df = pd.read_csv(csv_path)
 
             if 'dish' in df.columns and search_term.lower() in df['dish'].str.lower().values:
@@ -36,6 +35,30 @@ def search_recipe_results():
                                         'serving': df.at[0, 'serving'], 'pic': df.at[0, 'pic']})
 
     return render_template('search_recipe_results.html', search_term=search_term, matched_recipes=matched_recipes)
+
+@app.route('/view_all_recipes', methods=['GET'])
+def view_all_recipes():
+    recipes = get_all_recipes()
+    return render_template('view_all_recipes.html', recipes=recipes)
+
+def get_all_recipes():
+    data_dir = app.config['SUBMITTED_DATA']
+    csv_files = [filename for filename in os.listdir(data_dir) if filename.endswith('.csv')]
+
+    all_recipes = []
+    for csv_filename in csv_files:
+        csv_path = os.path.join(data_dir, csv_filename)
+        df = pd.read_csv(csv_path)
+        recipe_info = {
+            'recipe_name': df.at[0, 'dish'],
+            'ingredients': df.at[0, 'ingredients'],
+            'prep': df.at[0, 'prep'],
+            'serving': df.at[0, 'serving'],
+            'pic': df.at[0, 'pic']
+        }
+        all_recipes.append(recipe_info)
+
+    return all_recipes
 
 
 # @app.route('/add_recipe', methods = ['POST', 'GET'])
@@ -64,6 +87,29 @@ def add_recipe_auto():
         return render_template('add_recipe_auto.html', form=form)
 
 
+@app.route('/remove_recipe', methods=['GET', 'POST'])
+def remove_recipe():
+    if request.method == 'POST':
+        recipe_to_remove = request.form['recipe_to_remove']
+        csv_filename = recipe_to_remove.lower().replace(" ", "_") + '.csv'
+        csv_path = os.path.join(app.config['SUBMITTED_DATA'], csv_filename)
+
+        if os.path.exists(csv_path):
+            os.remove(csv_path)
+        return redirect(url_for('remove_recipe'))
+
+    recipes = get_recipe_list()
+    return render_template('remove_recipe.html', recipes=recipes)
+
+def get_recipe_list():
+    csv_files = [filename for filename in os.listdir(app.config['SUBMITTED_DATA']) if filename.endswith('.csv')]
+
+    recipe_list = []
+    for csv_filename in csv_files:
+        recipe_name = csv_filename.replace('.csv', '').replace('_', ' ').title()
+        recipe_list.append(recipe_name)
+
+    return recipe_list
 
 
 if __name__ == '__main__':

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+Recipe Collection - All Recipes
+{% endblock %}
+
+{% block page_content %}
+<section class="container mt-5">
+    <header class="text-center">
+        <h1 class="display-4">All Recipes</h1>
+    </header>
+</section>
+
+<section class="container my-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            {% if recipes %}
+                {% for recipe in recipes %}
+                    <div class="card my-3">
+                        <div class="card-header">{{ recipe.recipe_name }}</div>
+                        <div class="card-body">
+                            <img src="{{ url_for('static', filename='image_dir/' + recipe.pic) }}" alt="{{ recipe.recipe_name }}" class="img-fluid">
+                            <p><strong>Ingredients:</strong> {{ recipe.ingredients }}</p>
+                            <p><strong>Preparation Instructions:</strong> {{ recipe.prep }}</p>
+                            <p><strong>Serving Instructions:</strong> {{ recipe.serving }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No recipes available.</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -5,30 +5,16 @@ Recipe Collection - Remove Recipes
 {% endblock %}
 
 {% block page_content %}
-<section class="container mt-5">
-    <header class="text-center">
-        <h1 class="display-4">Remove Recipes</h1>
-        <p class="lead">Select a recipe to remove from the collection.</p>
-    </header>
-</section>
-
-<section class="container my-5">
-    <div class="row">
-        <div class="col-lg-8 mx-auto">
-            <form action="{{ url_for('remove_recipe') }}" method="post">
-                {{ form.csrf_token }}
-                <label for="recipe">Select Recipe:</label>
-                <select name="recipe" class="form-select mb-3">
-                    <option value="" selected disabled>Select a recipe to remove</option>
-                    {% for csv_file in csv_files %}
-                        <option value="{{ csv_file }}">{{ csv_file }}</option>
-                    {% endfor %}
-                </select>
-                <div class="text-center">
-                    <button type="submit" class="btn btn-danger">Remove Recipe</button>
-                </div>
-            </form>
-        </div>
+<form method="POST" action="">
+    <div class="form-group">
+        <label for="recipe_to_remove">Select Recipe to Remove:</label>
+        <select class="form-control" id="recipe_to_remove" name="recipe_to_remove">
+            <option value="" disabled selected>Select a recipe</option>
+            {% for recipe in recipes %}
+                <option value="{{ recipe }}">{{ recipe }}</option>
+            {% endfor %}
+        </select>
     </div>
-</section>
+    <button type="submit" class="btn btn-danger">Remove Recipe</button>
+</form>
 {% endblock %}
