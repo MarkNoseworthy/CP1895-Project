@@ -60,16 +60,6 @@ def get_all_recipes():
 
     return all_recipes
 
-
-# @app.route('/add_recipe', methods = ['POST', 'GET'])
-# def add_recipe():
-#     if request.method == 'POST':
-#         dish_name = request.form['dish_name']
-#         print(dish_name)
-#         return "Dish added successfully."
-#     else:
-#         return render_template('add_recipe_manual.html')
-
 @app.route('/add_recipe_auto', methods = ['POST', 'GET'])
 def add_recipe_auto():
     form = RecipeInformation()
