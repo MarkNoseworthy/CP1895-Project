@@ -8,7 +8,7 @@ Recipe Collection - Search Recipes
 <section class="container mt-5">
     <header class="text-center">
         <h1 class="display-4">Search Recipes</h1>
-        <p class="lead">Search for recipes by name or ingredients.</p>
+        <p class="lead">Search for recipes by name.</p>
     </header>
 </section>
 
@@ -18,7 +18,7 @@ Recipe Collection - Search Recipes
             <form action="{{ url_for('search_recipe_results') }}" method="get">
                 <div class="form-group">
                     <label for="search_term">Search Term:</label>
-                    <input type="text" name="search_term" class="form-control" placeholder="Enter recipe name or ingredients">
+                    <input type="text" name="search_term" class="form-control" placeholder="Enter recipe name">
                 </div>
                 <button type="submit" class="btn btn-primary">Search</button>
             </form>
